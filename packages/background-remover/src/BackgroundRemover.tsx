@@ -198,38 +198,40 @@ const BackgroundRemover: React.FC<BackgroundRemoverProps> = ({ file, onClose }) 
       <Toaster position="top-center" />
       <div className="fixed inset-0 bg-gray-900/80 flex items-center justify-center p-4 z-50 animate-fade-in" aria-modal="true" role="dialog">
         <div className="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-6xl max-h-[90vh] flex flex-col shadow-2xl animate-scale-up">
-          <header className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700">
+          <header className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700 flex-shrink-0">
             <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Editor de Imagem</h2>
             <button onClick={onClose} className="p-1 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700" aria-label="Fechar">
               <XIcon className="w-6 h-6" />
             </button>
           </header>
 
-          <main className="flex-1 overflow-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col items-center justify-center space-y-2">
-              <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Original</h3>
-              <div className="w-full aspect-square bg-slate-100 dark:bg-slate-900/50 rounded-lg flex items-center justify-center">
-                {originalImageUrl ? <img src={originalImageUrl} alt="Original" className="max-w-full max-h-full object-contain rounded-md" /> : <PictureIcon className="w-16 h-16 text-slate-400" />}
+          <main className="flex-1 overflow-auto p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+              <div className="flex flex-col items-center justify-center space-y-2">
+                <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Original</h3>
+                <div className="w-full flex-1 bg-slate-100 dark:bg-slate-900/50 rounded-lg flex items-center justify-center">
+                  {originalImageUrl ? <img src={originalImageUrl} alt="Original" className="max-w-full max-h-full object-contain rounded-md" /> : <PictureIcon className="w-16 h-16 text-slate-400" />}
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col items-center justify-center space-y-2">
-              <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Editado</h3>
-              <div className="w-full aspect-square bg-slate-100 dark:bg-slate-900/50 rounded-lg flex items-center justify-center relative bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%228%22%20height%3D%228%22%3E%3Cpath%20d%3D%22M0%200h4v4H0zM4%204h4v4H4z%22%20fill%3D%22%23ccc%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E')]">
-                {isLoading && (
-                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center rounded-lg text-white p-4">
-                    <div className="w-16 h-16 border-4 border-t-sky-500 border-white/50 rounded-full animate-spin"><span className="sr-only">Carregando...</span></div>
-                    <p className="mt-4 text-lg font-semibold">{progress}%</p><p className="text-sm">{progressMessage}</p>
+              <div className="flex flex-col items-center justify-center space-y-2">
+                <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Editado</h3>
+                <div className="w-full flex-1 bg-slate-100 dark:bg-slate-900/50 rounded-lg flex items-center justify-center relative bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%228%22%20height%3D%228%22%3E%3Cpath%20d%3D%22M0%200h4v4H0zM4%204h4v4H4z%22%20fill%3D%22%23ccc%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E')]">
+                  {isLoading && (
+                    <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center rounded-lg text-white p-4">
+                      <div className="w-16 h-16 border-4 border-t-sky-500 border-white/50 rounded-full animate-spin"><span className="sr-only">Carregando...</span></div>
+                      <p className="mt-4 text-lg font-semibold">{progress}%</p><p className="text-sm">{progressMessage}</p>
+                    </div>
+                  )}
+                  <div className="relative max-w-full max-h-full flex items-center justify-center touch-none" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseLeave={() => { if(isDrawing) handleMouseUp(); setShowCursor(false); }} onMouseMove={handleMouseMove} onMouseEnter={() => setShowCursor(true)} style={{ cursor: activeTool ? 'none' : 'default' }}>
+                      <canvas ref={canvasRef} className="max-w-full max-h-full object-contain rounded-md" />
+                      {showCursor && activeTool && (<div className="rounded-full border-2 border-sky-500 bg-sky-500/20 pointer-events-none" style={{ position: 'fixed', left: cursorPosition.x, top: cursorPosition.y, width: `${getScaledBrushSize()}px`, height: `${getScaledBrushSize()}px`, transform: 'translate(-50%, -50%)' }}/>)}
                   </div>
-                )}
-                <div className="relative max-w-full max-h-full flex items-center justify-center touch-none" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseLeave={() => { if(isDrawing) handleMouseUp(); setShowCursor(false); }} onMouseMove={handleMouseMove} onMouseEnter={() => setShowCursor(true)} style={{ cursor: activeTool ? 'none' : 'default' }}>
-                    <canvas ref={canvasRef} className="max-w-full max-h-full object-contain rounded-md" />
-                    {showCursor && activeTool && (<div className="rounded-full border-2 border-sky-500 bg-sky-500/20 pointer-events-none" style={{ position: 'fixed', left: cursorPosition.x, top: cursorPosition.y, width: `${getScaledBrushSize()}px`, height: `${getScaledBrushSize()}px`, transform: 'translate(-50%, -50%)' }}/>)}
                 </div>
               </div>
             </div>
           </main>
 
-          <div className="p-4 border-y border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="p-4 border-y border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-center gap-4 flex-shrink-0">
               <div className="flex items-center space-x-2" aria-label="Ferramentas de Edição">
                   <ToolButton toolName="brush" icon={<BrushIcon className="w-5 h-5" />} />
                   <ToolButton toolName="eraser" icon={<EraserIcon className="w-5 h-5" />} />
@@ -243,7 +245,7 @@ const BackgroundRemover: React.FC<BackgroundRemoverProps> = ({ file, onClose }) 
               </div>
           </div>
 
-          <footer className="flex justify-between items-center p-4 bg-slate-50 dark:bg-slate-800/50">
+          <footer className="flex justify-between items-center p-4 bg-slate-50 dark:bg-slate-800/50 flex-shrink-0">
             <button onClick={onClose} className="px-4 py-2 rounded-lg bg-slate-200 text-slate-800 dark:bg-slate-700 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors font-semibold flex items-center space-x-2">
               <TrashIcon className="w-5 h-5" /><span>Descartar</span>
             </button>
