@@ -1,0 +1,4 @@
+{
+  "buildCommand": "pnpm --filter meu-app-react build",
+  "outputDirectory": "apps/meu-app-react/dist"
+}
