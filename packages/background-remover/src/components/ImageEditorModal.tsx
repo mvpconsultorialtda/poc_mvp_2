@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import './../background-remover.css';
 import { removeBackground } from '@imgly/background-removal';
 import { DownloadIcon, TrashIcon, XIcon, BrushIcon, EraserIcon, UndoIcon, PictureIcon } from './icons';
 

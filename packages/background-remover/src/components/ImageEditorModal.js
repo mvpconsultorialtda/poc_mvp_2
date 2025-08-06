@@ -1,5 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useRef } from 'react';
+import './../background-remover.css';
 import { removeBackground } from '@imgly/background-removal';
 import { DownloadIcon, TrashIcon, XIcon, BrushIcon, EraserIcon, UndoIcon, PictureIcon } from './icons';
 const ImageEditorModal = ({ isOpen, onClose, file }) => {
