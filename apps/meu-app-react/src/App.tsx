@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import '@meu-projeto/background-remover/index.css';
 import { showPopup } from '@meu-projeto/modulo-exemplo';
 import { BackgroundRemover } from '@meu-projeto/background-remover';
 
