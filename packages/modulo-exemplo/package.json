@@ -1,7 +1,7 @@
 {
   "name": "@meu-projeto/modulo-exemplo",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "index.ts",
   "peerDependencies": {
     "react": ">=18.0.0"
   }
