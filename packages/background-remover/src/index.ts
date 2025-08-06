@@ -1,1 +1,1 @@
-export { default as BackgroundRemover } from './BackgroundRemover';
+export { default } from './BackgroundRemover';

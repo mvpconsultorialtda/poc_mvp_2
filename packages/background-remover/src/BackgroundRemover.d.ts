@@ -1,6 +1,6 @@
 import React from 'react';
 interface BackgroundRemoverProps {
-    file: File;
+    file: File | null;
     onClose: () => void;
 }
 declare const BackgroundRemover: React.FC<BackgroundRemoverProps>;

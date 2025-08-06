@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { showPopup } from '@meu-projeto/modulo-exemplo';
-import { BackgroundRemover } from '@meu-projeto/background-remover';
+import BackgroundRemover from '@meu-projeto/background-remover';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -14,6 +14,11 @@ function App() {
 
   const handleClose = () => {
     setSelectedFile(null);
+    // Reset the file input
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   };
 
   return (
@@ -21,10 +26,10 @@ function App() {
       <header className="App-header">
         <h1>Simple React App</h1>
         <p>Welcome to your deployed application.</p>
-        <input type="file" onChange={handleFileChange} accept="image/*" />
+        <input id="file-input" type="file" onChange={handleFileChange} accept="image/*" />
         <button onClick={() => showPopup('This is a popup from the shared module!')}>Show Popup</button>
       </header>
-      {selectedFile && <BackgroundRemover file={selectedFile} onClose={handleClose} />}
+      <BackgroundRemover file={selectedFile} onClose={handleClose} />
     </div>
   );
 }
