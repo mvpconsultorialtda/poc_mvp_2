@@ -1,4 +1,5 @@
 {
+  "rewrites": [{ "source": "/(.*)", "destination": "/apps/meu-app-react/dist/$1" }],
   "builds": [
     {
       "src": "apps/meu-app-react/package.json",
