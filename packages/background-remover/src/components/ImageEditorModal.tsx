@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './../background-remover.css';
 import { removeBackground } from '@imgly/background-removal';
 import { DownloadIcon, TrashIcon, XIcon, BrushIcon, EraserIcon, UndoIcon, PictureIcon } from './icons';
@@ -224,7 +225,7 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, fi
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 animate-fade-in" aria-modal="true" role="dialog">
       <div className="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-6xl max-h-[90vh] flex flex-col shadow-2xl animate-scale-up">
         <header className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700">
@@ -310,7 +311,8 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, fi
           </button>
         </footer>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
