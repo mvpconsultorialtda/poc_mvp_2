@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter meu-app-react dev",
-    "build": "pnpm --filter meu-app-react build",
+    "build": "pnpm --filter @meu-projeto/background-remover build && pnpm --filter meu-app-react build",
     "lint": "pnpm --filter meu-app-react lint",
     "preview": "pnpm --filter meu-app-react preview"
   },
